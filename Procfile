@@ -1,1 +1,1 @@
-web: go build main.go
+web: Canning-paper-system
