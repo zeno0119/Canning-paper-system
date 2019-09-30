@@ -15,7 +15,7 @@ jobs:
           key: dependency-cache-{{ checksum "./client/package.json" }}
       - run:
           name: install-npm-wee
-          command: npm install
+          command: yarn install
           working_directory: ~/repos/client
       - save_cache: # 依存関係キャッシュを保存する特別なステップ
           key: dependency-cache-{{ checksum "./client/package.json" }}
