@@ -12,7 +12,7 @@ func main(){
 	port := os.Getenv("PORT")
 	if port == "" {port = "8080"}
 	router := gin.Default()
-	router.Static("/_nuxt/","./client/dist/_nuxt")
+	router.Static("/_nuxt","./client/dist/_nuxt")
 	router.GET("/", func(c *gin.Context){
     	c.File("./client/dist/index.html")
 	})

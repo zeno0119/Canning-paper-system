@@ -11,6 +11,7 @@
         </p>
       </div>
     </div>
+    <nuxt-link to="./input">移動</nuxt-link>
   </div>
 </template>
 
