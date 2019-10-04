@@ -32,7 +32,7 @@ export default {
     }
   },
   created(){
-    this.socket = new W3cWebsocket('ws://' + "canning-zeno0119.herokuapp.com" + "/ws")
+    this.socket = new W3cWebsocket('wss://' + "canning-zeno0119.herokuapp.com" + "/ws")
   }
 }
 </script>
