@@ -16,21 +16,18 @@
 </template>
 
 <script>
-import {w3cwebsocket} from 'websocket'
 import axios from 'axios'
-const W3cWebsocket = w3cwebsocket
-
 export default {
   data () {
     return {
       content: '',
       date: '',
       intervalId: undefined,
-      socket: undefined,
+      socket: null
     }
   },
-  created () {
-    this.socket = new W3cWebsocket('wss://' + 'canning-zeno0119.herokuapp.com' + '/ws')
+  mounted () {
+    this.socket = new WebSocket('wss://canning-zeno0119.herokuapp.com/ws')
     this.intervalId = setInterval(() => {
       this.date = new Date()
     }, 1000)
