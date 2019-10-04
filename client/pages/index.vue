@@ -30,7 +30,7 @@ export default {
     }
   },
   created () {
-    this.socket = new W3cWebsocket('ws://' + 'localhost:8080' + '/ws')
+    this.socket = new W3cWebsocket('ws://' + 'canning-zeno0119.herokuapp.com' + '/ws')
     this.intervalId = setInterval(() => {
       this.date = new Date()
     }, 1000)
