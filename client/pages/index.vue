@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hero is-fullheight" @click="get">
+    <div class="hero is-fullheight">
       <div class="hero-body" style="display: block; text-align: center;">
         <p class="title">
           {{ date }}
@@ -11,37 +11,40 @@
         </p>
       </div>
     </div>
-    <nuxt-link to="./input">移動</nuxt-link>
+    <nuxt-link to="input">移動</nuxt-link>
   </div>
 </template>
 
 <script>
+import {w3cwebsocket} from 'websocket'
 import axios from 'axios'
+const W3cWebsocket = w3cwebsocket
+
 export default {
   data () {
     return {
       content: '',
-      address: 'https://canning-zeno0119.herokuapp.com',
       date: '',
-      intervalId: undefined
+      intervalId: undefined,
+      socket: undefined,
     }
   },
   created () {
+    this.socket = new W3cWebsocket('ws://' + 'localhost:8080' + '/ws')
     this.intervalId = setInterval(() => {
       this.date = new Date()
-      this.get()
     }, 1000)
+
+    this.socket.onmessage = (msg) => {
+      this.content = msg.data
+    }
+    axios.get('/api/get')
+      .then((res) => {
+        this.content = res.data.content
+        })
   },
   beforeDestroy () {
     clearInterval(this.intervalId)
-  },
-  methods: {
-    get () {
-      axios.get(this.address + '/api/get')
-        .then((res) => {
-          this.content = res.data.content
-        })
-    }
   }
 }
 </script>

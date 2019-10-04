@@ -13,25 +13,26 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {w3cwebsocket} from 'websocket'
+const W3cWebsocket = w3cwebsocket
 
 export default {
   data () {
     return {
       content: '',
       result: '',
-      address: 'https://canning-zeno0119.herokuapp.com'
+      socket: ''
     }
   },
   methods: {
     post () {
-      const param = new URLSearchParams()
-      param.append('content', this.content)
-      axios.post(this.address + '/api/post', param)
-        .then((res) => {
-          this.result = res.data.content
-        })
+      this.socket.send(this.content)
+      this.result = this.content
+      this.content = ''
     }
+  },
+  created(){
+    this.socket = new W3cWebsocket('ws://' + "localhost:8080" + "/ws")
   }
 }
 </script>
