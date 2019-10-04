@@ -3,18 +3,20 @@ jobs:
   deploy_prod:
     docker:
       - image: circleci/node:10.16.3
-    working_directory: ~/repos/client
+    working_directory: ~/repos
     steps:
       - checkout
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
+          working_directory: ~/repos/client
       - restore_cache: # 依存関係キャッシュを復元する特別なステップ
           # 依存関係キャッシュについては https://circleci.com/docs/ja/2.0/caching/ をお読みください
           key: dependency-cache-{{ checksum "./client/package.json" }}
       - run:
           name: install-npm-wee
           command: yarn install
+          working_directory: ~/repos/client
       - save_cache: # 依存関係キャッシュを保存する特別なステップ
           key: dependency-cache-{{ checksum "./client/package.json" }}
           paths:
@@ -22,6 +24,7 @@ jobs:
       - run:
           name: nuxt generate
           command: yarn run generate
+          working_directory: ~/repos/client
       - run:
           name: 'Install Heroku CLI, if necessary'
           command:
